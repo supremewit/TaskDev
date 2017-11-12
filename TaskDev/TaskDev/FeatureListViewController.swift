@@ -10,12 +10,26 @@ import UIKit
 
 class FeatureListViewController: UITableViewController {
 
+    var featureList:Feature?
+    var newFeature:addFeature?
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    @IBAction func unwindToFeatureList(segue:UIStoryboardSegue) {
+        print("unwind")
+    }
+    
+    func addNewItem(feature:Feature) {
+        if(self.featureList?.addItem?.append(newFeature!)) == nil {
+            self.featureList?.addItem = [newFeature!]
+        }
+        
     }
 
     // MARK: - Table view data source

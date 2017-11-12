@@ -8,6 +8,8 @@
 
 import Foundation
 
+let featureName = "FeatureData"
+
 let dataCenter:DataCenter = DataCenter()
 
 class DataCenter {
@@ -31,6 +33,7 @@ struct Feature {
     let title:String
     var deadLine:Date?
     var TaskList:[Task]?
+    var addItem:[addFeature]?
     
     init(title:String) {
         self.title = title
@@ -60,4 +63,13 @@ struct Todo {
     }
 }
 
+class addFeature {
+    var title:String
+    var importance:String
+    
+    init() {
+        self.title = "제목 없음"
+        self.importance = "N"
+    }
+}
 

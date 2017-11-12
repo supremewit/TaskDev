@@ -9,15 +9,21 @@
 import UIKit
 
 class FeatureAddViewController: UITableViewController {
+    
 
+
+    @IBOutlet weak var featureTitle: UITextField!
+    @IBOutlet weak var setImprotance: UISegmentedControl!
     @IBAction func makeAction(_ sender: Any) {
-    }
-    @IBAction func cancelAction(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.featureTitle.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {

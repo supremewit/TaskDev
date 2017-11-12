@@ -10,6 +10,7 @@ import UIKit
 
 class TodoAddViewController: UITableViewController {
 
+    @IBOutlet weak var todoTitle: UITextField!
     @IBAction func makeAction(_ sender: Any) {
     }
     @IBAction func cancelAction(_ sender: Any) {
@@ -18,6 +19,11 @@ class TodoAddViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.todoTitle.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {

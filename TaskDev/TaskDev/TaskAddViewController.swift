@@ -10,6 +10,7 @@ import UIKit
 
 class TaskAddViewController: UITableViewController {
 
+    @IBOutlet weak var taskTitle: UITextField!
     @IBAction func makeAction(_ sender: Any) {
     }
     @IBAction func cancelAction(_ sender: Any) {
@@ -18,6 +19,11 @@ class TaskAddViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.taskTitle.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
