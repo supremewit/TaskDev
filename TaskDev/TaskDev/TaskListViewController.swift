@@ -2,23 +2,30 @@
 //  TaskListViewController.swift
 //  TaskDev
 //
-//  Created by Mac on 2017. 11. 11..
+//  Created by Mac on 2017. 11. 22..
 //  Copyright © 2017년 Mac. All rights reserved.
 //
 
 import UIKit
 
 class TaskListViewController: UITableViewController {
-    
-    var FeatureList:Feature?
 
+    @IBAction func unwindToTaskList(segue: UIStoryboardSegue) {}
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = FeatureList?.title
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func makeTask(task:Task) {
+        if(dataCenter.task.append(task)) == nil {
+            dataCenter.task = [task]
+        }
+        dataCenter.save()
+        self.tableView.reloadData()
     }
 
     // MARK: - Table view data source
@@ -28,68 +35,42 @@ class TaskListViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let rowCount = FeatureList?.TaskList?.count else {
-            return 0
-        }
+        let rowCount = dataCenter.task.count
         return rowCount
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath)
-        guard let taskCell = FeatureList?.TaskList?[indexPath.row] else {
-            return cell
-        }
-        
+        let taskCell = dataCenter.task[indexPath.row]
         cell.textLabel?.text = taskCell.title
+        let deadLine = taskCell.deadLine != nil ? "\(taskCell.deadLine!.description) 까지" : ""
+        cell.detailTextLabel?.text = deadLine
+        cell.detailTextLabel?.textColor = UIColor.gray
         return cell
     }
- 
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let saveAsTemplate = UITableViewRowAction(style: .normal, title: "save") { action, index in
+            dataCenter.AddTaskToTemplates(index: indexPath.row)
+        }
+        let delete = UITableViewRowAction(style: .normal, title: "delete") { action, index in
+            dataCenter.task.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+            dataCenter.save()
+        }
+        delete.backgroundColor = UIColor.red
+        return [saveAsTemplate, delete]
     }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "TodoSegue" {
+        if segue.identifier == "Task" {
             if let destination = segue.destination as? TodoListViewController {
                 if let selectedIndex = self.tableView.indexPathForSelectedRow?.row {
-                    destination.TaskList = dataCenter.tasks[selectedIndex] as Task
+                    destination.taskList = dataCenter.task[selectedIndex] as Task
                 }
             }
         }

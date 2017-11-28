@@ -1,51 +1,45 @@
 //
-//  FeatureListViewController.swift
+//  TemplateViewController.swift
 //  TaskDev
 //
-//  Created by Mac on 2017. 11. 22..
+//  Created by Mac on 2017. 11. 25..
 //  Copyright © 2017년 Mac. All rights reserved.
 //
 
 import UIKit
 
-class FeatureListViewController: UITableViewController {
+class TemplateViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        let rowCount = dataCenter.templates.count
+        return rowCount
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "templateCell", for: indexPath)
+        let taskCell = dataCenter.templates[indexPath.row]
+        cell.textLabel?.text = taskCell.task?.title
+        let uploaderName = dataCenter.templates[indexPath.row].uploader
+        cell.detailTextLabel?.text = uploaderName
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -82,14 +76,20 @@ class FeatureListViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "TemplateTask" {
+            if let destination = segue.destination as? TodoListViewController {
+                if let selectedIndex = self.tableView.indexPathForSelectedRow?.row {
+                    destination.taskList = dataCenter.templates[selectedIndex].task as? Task
+                }
+            }
+        }
     }
-    */
+    
+    
 
 }

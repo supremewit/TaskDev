@@ -2,36 +2,31 @@
 //  FeatureAddViewController.swift
 //  TaskDev
 //
-//  Created by Mac on 2017. 11. 11..
+//  Created by Mac on 2017. 11. 22..
 //  Copyright © 2017년 Mac. All rights reserved.
 //
 
 import UIKit
 
 class FeatureAddViewController: UITableViewController {
-    
 
-
-    @IBOutlet weak var featureTitle: UITextField!
-    @IBOutlet weak var setImprotance: UISegmentedControl!
-    @IBAction func makeAction(_ sender: Any) {
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.featureTitle.becomeFirstResponder()
+
+        // Uncomment the following line to preserve selection between presentations
+        // self.clearsSelectionOnViewWillAppear = false
+
+        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
     // MARK: - Table view data source
-/*
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 0
@@ -41,7 +36,7 @@ class FeatureAddViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 0
     }
-*/
+
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
