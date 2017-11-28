@@ -38,7 +38,18 @@ class TaskAddViewController: UITableViewController {
         }
         let task:Task = Task()
         let title = TaskTitle.text!
-        let deadline = TaskDeadline.date.description
+        
+        
+        let preDeadline:String = TaskDeadline.date.description
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss +0000" //change formatter like this.
+        let dateObj = dateFormatter.date(from: preDeadline)
+        dateFormatter.dateFormat = "yyyy년 MM월 dd일"
+        let deadline:String = dateFormatter.string(from: dateObj!)
+        
+        print("\(deadline)")
+
         
         task.title = title
         task.deadLine = deadline
